@@ -8,9 +8,36 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct User: Identifiable {
+    var id = UUID()
+    var name: String
+}
+
+struct UserView: View {
+    var user: User
+    
     var body: some View {
-        Text("Hello World")
+        NavigationLink(destination: Text(user.name)) {
+            Text(user.name)
+                .font(.title)
+                .foregroundColor(.red)
+        }
+    }
+}
+
+struct ContentView: View {
+    
+    let users = [
+        User(name: "Taylor"),
+        User(name: "Adele"),
+        User(name: "Justin")
+    ]
+    
+    var body: some View {
+        NavigationView {
+            List(users, rowContent: UserView.init)
+            .navigationBarTitle("SwiftUI Tour")
+        }
     }
 }
 
